@@ -80,7 +80,7 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.commands.registerCommand('confluence.searchFromSidebar', async (input: any) => {
       try {
         const out = await runSearch(input.advanced ? { cql: input.query } : { query: input.query }, 'sidebar');
-        const picks: Array<{ label: string; description: string; detail: string; id: string }> = out.results.map((r: any) => ({ label: r.title, description: `${r.spaceKey} ${r.lastUpdated ?? ''}`, detail: r.url, id: r.id }));
+        const picks = out.results.map((r: any) => ({ label: r.title, description: `${r.spaceKey} ${r.lastUpdated ?? ''}`, detail: r.url, id: r.id }));
         const selected = await vscode.window.showQuickPick(picks, { placeHolder: 'Search Results' });
         if (!selected) return;
         const action = await vscode.window.showQuickPick(['Open link', 'Copy link', 'Fetch content', 'Copy markdown']);

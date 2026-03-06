@@ -141,7 +141,16 @@
   },
   "scripts": {
     "build": "tsc -p .",
-    "package": "bash scripts/package-vsix.sh"
+    "test": "vitest run",
+    "lint": "tsc -p . --noEmit"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8",
+    "vscode": "^1.1.37"
+  },
+  "dependencies": {
+    "turndown": "^7.2.0"
+  }
 }
