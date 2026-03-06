@@ -1,0 +1,147 @@
+{
+  "name": "confluence-copilot-tools",
+  "displayName": "Confluence Copilot Tools",
+  "description": "Confluence Data Center tools for GitHub Copilot Chat",
+  "version": "0.0.1",
+  "publisher": "local",
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onView:confluence.connectionView",
+    "onLanguageModelTool:confluence.search",
+    "onLanguageModelTool:confluence.getPage",
+    "onLanguageModelTool:confluence.getPageByUrl"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "confluence",
+          "title": "Confluence",
+          "icon": "media/confluence.svg"
+        }
+      ]
+    },
+    "views": {
+      "confluence": [
+        {
+          "id": "confluence.connectionView",
+          "name": "Connection"
+        },
+        {
+          "id": "confluence.scopeView",
+          "name": "Scope & Safety"
+        },
+        {
+          "id": "confluence.searchView",
+          "name": "Search & Browse"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Confluence Copilot Tools",
+      "properties": {
+        "confluence.baseUrl": {
+          "type": "string",
+          "default": "",
+          "description": "Confluence base URL, may include context path."
+        },
+        "confluence.scopeMode": {
+          "type": "string",
+          "enum": [
+            "allowlist",
+            "all"
+          ],
+          "default": "allowlist"
+        },
+        "confluence.allowedSpaceKeys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "confluence.approval.askBeforeSearch": {
+          "type": "boolean",
+          "default": true
+        },
+        "confluence.approval.askBeforeFetch": {
+          "type": "boolean",
+          "default": true
+        },
+        "confluence.limits.maxResults": {
+          "type": "number",
+          "default": 20
+        },
+        "confluence.limits.maxPages": {
+          "type": "number",
+          "default": 3
+        },
+        "confluence.limits.maxChars": {
+          "type": "number",
+          "default": 12000
+        },
+        "confluence.limits.maxToolCalls": {
+          "type": "number",
+          "default": 8
+        },
+        "confluence.cache.enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "confluence.cache.ttlSeconds": {
+          "type": "number",
+          "default": 300
+        }
+      }
+    },
+    "languageModelTools": [
+      {
+        "name": "confluence.search",
+        "description": "Search Confluence pages via CQL."
+      },
+      {
+        "name": "confluence.getPage",
+        "description": "Get Confluence page content by page id."
+      },
+      {
+        "name": "confluence.getPageByUrl",
+        "description": "Get Confluence page content by URL."
+      }
+    ],
+    "chatParticipants": [
+      {
+        "id": "confluence.chat",
+        "name": "confluence",
+        "fullName": "Confluence",
+        "description": "Search and read Confluence pages",
+        "isSticky": true,
+        "commands": [
+          {
+            "name": "search",
+            "description": "Search Confluence"
+          },
+          {
+            "name": "page",
+            "description": "Fetch page by id"
+          },
+          {
+            "name": "help",
+            "description": "Show help"
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "package": "bash scripts/package-vsix.sh"
+  },
+  "devDependencies": {}
+}
